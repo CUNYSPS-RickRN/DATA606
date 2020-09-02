@@ -1,0 +1,115 @@
+---
+title: 'Lab 1: Intro to R'
+author: "RickRN"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  openintro::lab_report: default
+---
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+library(openintro)
+
+```
+
+### Exercise 1
+
+Following is the vector of girls born during the years 1629-1710.
+
+```{r view-girls-counts}
+arbuthnot$girls
+```
+
+
+### Exercise 2
+
+There is an increasing trend in the number of girls born in the years of 1629-1710.
+
+```{r trend-girls}
+# Insert code for Exercise 2 here
+ggplot(data = arbuthnot, aes(x = year, y = girls)) + 
+  geom_line()
+
+```
+
+
+### Exercise 3
+
+There are slightly more boys than girls born in the years of 1629-1710.
+
+```{r plot-prop-boys-arbuthnot}
+# Insert code for Exercise 3 here
+arbuthnot <- arbuthnot %>%
+  mutate(total = boys + girls)
+
+arbuthnot <- arbuthnot %>%
+  mutate(boy_ratio = boys / total)
+
+ggplot(data = arbuthnot, aes(x = year, y = boy_ratio)) + 
+  geom_line()
+
+```
+
+
+### Exercise 4
+
+Following are the dimensions of the "present" birth records in the United States.
+
+```{r dim-present}
+# Insert code for Exercise 4 here
+dim(present)
+```
+
+
+
+### Exercise 5
+
+The 'present' dataset has 19 less cases ("years") than the arbuthnot dataset.
+
+```{r count-compare}
+# Insert code for Exercise 5 here
+present %>% summarize(min = min(year), max(year))
+
+arbuthnot %>% summarize(min = min(year), max(year))
+
+cat("Present: ", + length(present$year))
+cat(" Arbuthnot: ", + length(arbuthnot$year))
+
+cat(" Present difference in cases: ", + (case_diff <- length(present$year) - length(arbuthnot$year)))
+    
+
+
+```
+
+
+### Exercise 6
+
+There are slightly more boys than girls born in the years of 1940-2002. However, this is a negative trend.
+
+
+```{r plot-prop-boys-present}
+# Insert code for Exercise 6 here
+present <- present %>%
+  mutate(total = boys + girls)
+
+present <- present %>%
+  mutate(boy_ratio = boys / total)
+
+ggplot(data = present, aes(x = year, y = boy_ratio)) + 
+  geom_line()
+
+```
+
+
+### Exercise 7
+
+The year 1961 had the most total number of births in the US at 4,268,326.
+
+```{r find-max-total}
+# Insert code for Exercise 7 here
+present %>%
+  arrange(desc(total))
+
+```
+
